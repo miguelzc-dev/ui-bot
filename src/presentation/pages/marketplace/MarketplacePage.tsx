@@ -1,9 +1,8 @@
 import { useState } from "react";
 import {
   GptMessage,
-  GptOrthographyMessage,
   MyMessage,
-  TextMessageBoxFile,
+  TextMessageBoxMultiFile,
   TypingLoader,
 } from "../../components";
 import { marketplaceUseCase } from "../../../core/use-cases/marketplace.use-case";
@@ -17,11 +16,15 @@ export const MarketplacePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const handlePost = async (phone: string, text: string) => {
+  const handlePost = async (
+    phone: string,
+    text: string,
+    files: File[] = []
+  ) => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
-    const { ok, message } = await marketplaceUseCase(phone, text);
+    const { ok, message } = await marketplaceUseCase(phone, text, files);
     if (!ok) {
       setMessages((prev) => [
         ...prev,
@@ -121,7 +124,7 @@ export const MarketplacePage = () => {
         </>
       )}
 
-      <TextMessageBoxFile
+      <TextMessageBoxMultiFile
         onSendMessage={handlePost}
         placeholder="Escribe aquí lo que deseas"
         accept=".png, .jpg, .jpeg"

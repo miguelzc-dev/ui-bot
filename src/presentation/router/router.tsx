@@ -7,6 +7,13 @@ import { CompareQuotationPage } from "../pages/compare-quotation/CompareQuotatio
 
 export const menuRoutes = [
   {
+    to: "/chat-bot-marketplace",
+    icon: "fa-solid fa-store",
+    title: "Asistente Construex",
+    hidden: false,
+    component: <MarketplacePage />,
+  },
+  {
     to: "/chat-bot-order",
     icon: "fa-solid fa-cart-shopping",
     title: "Chat Bot Order",
@@ -33,13 +40,6 @@ export const menuRoutes = [
     title: "Chat Bot Compare Quotation",
     hidden: true,
     component: <CompareQuotationPage />,
-  },
-  {
-    to: "/chat-bot-marketplace",
-    icon: "fa-solid fa-store",
-    title: "Asistente Construex",
-    hidden: false,
-    component: <MarketplacePage />,
   },
 ];
 

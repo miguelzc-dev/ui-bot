@@ -1,15 +1,19 @@
 export const marketplaceUseCase = async (
   phone: string,
   prompt: string,
-  file?: File
+  files: File[]
 ) => {
   try {
     const formData = new FormData();
     formData.append("Body", prompt || "");
-    formData.append("From", "+593989160386");
+    formData.append("Token", "U2FsdGVkX19btyaN9pxAa3P3OZmnZNIu4AUtHS3lEWM=");
+    formData.append("Restart_Conversation", "false");
+    for (const file of files || []) {
+      formData.append("Files", file);
+    }
 
     const resp = await fetch(
-      `${import.meta.env.VITE_GPT_MARKETPLACE}/test_reply`,
+      `${import.meta.env.VITE_GPT_MARKETPLACE}/chat_bot`,
       {
         method: "POST",
         headers: {
@@ -25,12 +29,12 @@ export const marketplaceUseCase = async (
     return {
       ok: true,
       message: data.join("\n"),
-      file: file,
+      files: files,
     };
   } catch (error) {
     return {
       ok: false,
-      file: undefined,
+      files: [],
       message: "No se pudo procesar",
     };
   }
