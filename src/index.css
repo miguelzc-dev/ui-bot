@@ -4,9 +4,10 @@
 
 html,
 body {
-  background-color: #000000;
-  color: white;
+  /* background-color: #000000; */
+  /* color: white; */
   font-family: "Open Sans", sans-serif;
+  height: 100%;
 }
 
 h1 {

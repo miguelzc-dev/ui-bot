@@ -55,10 +55,10 @@ export const TextMessageBoxFile = ({
           </button>
         </div>
       ) : null}
-      <div className="flex flex-row items-center w-full h-auto justify-between gap-2  rounded-xl bg-[#2B2929] border-transparent p-2 shadow-sm focus-within:border-transparent">
+      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl border-transparent p-2 shadow-sm">
         <textarea
           name="message"
-          className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent text-gray-200 placeholder-gray-500 resize-none"
+          className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent placeholder-gray-500 resize-none"
           placeholder={placeholder}
           autoComplete={"off"}
           autoCorrect={"off"}
@@ -77,7 +77,7 @@ export const TextMessageBoxFile = ({
         <>
           <button
             type="button"
-            className="flex items-center justify-center text-gray-400 hover:text-gray-600"
+            className="flex items-center justify-center hover:text-gray-600"
             onClick={() => inputFileRef.current?.click()}
           >
             <i className="fa-solid fa-paperclip text-xl"></i>
@@ -96,10 +96,10 @@ export const TextMessageBoxFile = ({
         </>
 
         <button
-          className="btn-secondary bg-primary rounded-xl w-10"
+          className="btn-secondary bg-primary rounded-full h-10 w-10"
           type="submit"
         >
-          <i className="fa-solid fa-paper-plane"></i>
+          <i className="fa-solid fa-paper-plane text-white"></i>
         </button>
       </div>
     </form>

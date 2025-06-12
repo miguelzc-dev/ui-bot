@@ -68,10 +68,10 @@ export const MarketplacePage = () => {
         </div>
       ) : (
         <>
-          <div className="chat-messages text-center gap-2 w-[80%] mx-auto py-auto">
-            <h1 className="text-2xl font-bold">Hola</h1>
+          <div className="chat-messages h-auto text-center gap-2 w-[80%] mx-auto py-auto flex flex-col justify-center">
+            <h1 className="text-4xl font-bold">¡Hola!</h1>
             <p className="text-3xl">¿En que te puedo ayudar hoy?</p>
-            <button
+            {/* <button
               className="btn-option"
               onClick={() => {
                 handlePost("", "hola, ayúdame a Actualizar Logo del exhibidor");
@@ -116,17 +116,25 @@ export const MarketplacePage = () => {
               }}
             >
               Crear Proforma
-            </button>
+            </button> */}
+            <TextMessageBoxFile
+              onSendMessage={handlePost}
+              placeholder="Escribe aquí lo que deseas"
+              accept=".png, .jpg, .jpeg"
+              disableCorrections
+            />
           </div>
         </>
       )}
 
-      <TextMessageBoxFile
-        onSendMessage={handlePost}
-        placeholder="Escribe aquí lo que deseas"
-        accept=".png, .jpg, .jpeg"
-        disableCorrections
-      />
+      {messages.length > 0 && (
+        <TextMessageBoxFile
+          onSendMessage={handlePost}
+          placeholder="Escribe aquí lo que deseas"
+          accept=".png, .jpg, .jpeg"
+          disableCorrections
+        />
+      )}
     </div>
   );
 };
