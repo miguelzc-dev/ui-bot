@@ -6,7 +6,7 @@ export const DashboardLayout = () => {
   return (
     <div className="flex flex-col max-h-[calc(100vh)] min-h-[calc(100vh)] ">
       <main className="flex flex-row flex-grow sm:overflow-hidden overflow-y-auto">
-        <nav className="flex flex-col w-1/5 bg-black gap-1 items-center">
+        <nav className="flex flex-col w-2/12 bg-black gap-1 items-center">
           <img
             className="w-8/12 my-8"
             alt="Construex Logo"
@@ -17,7 +17,7 @@ export const DashboardLayout = () => {
           ))}
         </nav>
 
-        <section className="flex flex-col w-full bg-white p-3">
+        <section className="flex flex-col bg-white p-3 w-10/12">
           <div className="flex flex-row h-full ">
             <div className="flex flex-col flex-auto h-full p-1 overflow-x-auto">
               <Outlet />

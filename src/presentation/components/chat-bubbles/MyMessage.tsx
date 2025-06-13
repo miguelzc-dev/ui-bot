@@ -1,38 +1,40 @@
 interface Props {
   text: string;
-  file?: File;
+  files: File[];
 }
 
-export const MyMessage = ({ text, file }: Props) => {
+export const MyMessage = ({ text, files }: Props) => {
   return (
     <div className="col-start-6 col-end-13 p-3 rounded-lg">
       <div className="flex items-center justify-start flex-row-reverse">
         <div className="relative mr-3 text-sm bg-[#E4E4E4] py-2 px-4 shadow rounded-xl">
           <span style={{ whiteSpace: "pre-wrap" }}>{text}</span>
-          {file && (
+          {files.length > 0 && (
             <div
-              className="mt-2 text-xs text-[#060606] cursor-pointer"
-              onClick={() => {
-                const url = URL.createObjectURL(file);
-                const newWindow = window.open("", "_blank");
-                if (newWindow) {
-                  const fileType = file.type.startsWith("image/")
-                    ? "image"
-                    : "application/pdf";
-                  if (fileType === "image") {
-                    newWindow.document.write(`
-                      <img src="${url}" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;"/>
-                    `);
-                  } else {
-                    newWindow.document.write(`
-                      <iframe src="${url}" width="100%" height="100%" style="border: none;"></iframe>
-                    `);
-                  }
-                }
-              }}
+              className={`mt-2 ${
+                files.length > 4 ? "grid grid-cols-2 gap-1" : ""
+              }`}
             >
-              <i className="fa-solid fa-paperclip text-sm mr-3"></i>
-              {file.name}
+              {files.map((file, index) => (
+                <div key={index} className={files.length <= 4 ? "mt-2" : ""}>
+                  {file.type.startsWith("image/") ? (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      className={`${
+                        files.length <= 4
+                          ? "w-[100px] h-[100px]"
+                          : "w-[80px] h-[80px]"
+                      } object-cover rounded-lg`}
+                    />
+                  ) : (
+                    <div className="text-xs text-[#060606] cursor-pointer">
+                      <i className="fa-solid fa-paperclip text-sm mr-3"></i>
+                      {file.name}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </div>

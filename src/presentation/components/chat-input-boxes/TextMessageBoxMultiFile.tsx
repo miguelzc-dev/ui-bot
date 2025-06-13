@@ -3,7 +3,6 @@ import { FormEvent, useRef, useState } from "react";
 interface Props {
   onSendMessage: (phone: string, message: string, files: File[]) => void;
   placeholder?: string;
-  disableCorrections?: boolean;
   accept?: string;
 }
 
@@ -32,21 +31,11 @@ export const TextMessageBoxMultiFile = ({
   return (
     <form onSubmit={handleSendMessage}>
       {selectedFile.length > 0 ? (
-        <div className="flex items-center mb-2">
-          {selectedFile.map((file, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 bg-gray-800 text-gray-200 rounded-lg p-2"
-            >
-              <span className="truncate">{file.name}</span>
-              <span className="text-sm text-gray-500">
-                {Math.round(file.size / 1024)} KB
-              </span>
-            </div>
-          ))}
+        <div className="flex flex-row items-center px-4 gap-2 overflow-x-auto w-full">
           <button
             type="button"
-            className="text-red-500 hover:text-red-700"
+            title="Eliminar todo"
+            className="text-xl text-red-700"
             onClick={() => {
               setSelectedFile([]);
               if (inputFileRef.current) {
@@ -56,6 +45,32 @@ export const TextMessageBoxMultiFile = ({
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
+          {selectedFile.map((file, index) => (
+            <div
+              key={index}
+              className="flex flex-row items-center bg-white border-2 border-black rounded-md gap-2 px-2"
+              title={file.name}
+            >
+              <i className="fa-solid fa-file"></i>
+              <span className="truncate flex-wrap first-letter:flex-wrap">
+                {file.name.length > 10
+                  ? `${file.name.slice(0, 10)}...`
+                  : file.name}
+              </span>
+              <button
+                type="button"
+                className="text-red-500 hover:text-red-700"
+                onClick={() => {
+                  setSelectedFile(selectedFile.filter((_, i) => i !== index));
+                  if (inputFileRef.current) {
+                    inputFileRef.current.value = "";
+                  }
+                }}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          ))}
         </div>
       ) : null}
       <div className="flex flex-row items-center w-full h-auto justify-between gap-2 rounded-xl px-5 border-2 border-black">

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const marketplaceUseCase = async (
   token: string,
   prompt: string,
@@ -12,30 +14,31 @@ export const marketplaceUseCase = async (
       formData.append("Files", file);
     }
 
-    const resp = await fetch(
+    const resp = await axios.post(
       `${import.meta.env.VITE_GPT_MARKETPLACE}/chat_bot`,
+      formData,
       {
-        method: "POST",
         headers: {
-          accept: "application/json",
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
         },
-        body: formData,
       }
     );
 
-    if (!resp.ok) throw new Error("No se pudo procesar");
-    const data = (await resp.json()) as String[];
-
     return {
       ok: true,
-      message: data.join("\n"),
+      message: resp.data.join("\n"),
       files: files,
     };
   } catch (error) {
+    let errorMessage = "No se pudo procesar";
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data?.detail || error.message;
+    }
     return {
       ok: false,
       files: [],
-      message: "No se pudo procesar",
+      message: errorMessage,
     };
   }
 };

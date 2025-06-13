@@ -10,6 +10,7 @@ import { marketplaceUseCase } from "../../../core/use-cases/marketplace.use-case
 interface Message {
   text: string;
   isGpt: boolean;
+  files: File[];
 }
 
 export const MarketplacePage = () => {
@@ -22,15 +23,16 @@ export const MarketplacePage = () => {
     files: File[] = []
   ) => {
     setIsLoading(true);
-    setMessages((prev) => [...prev, { text: text, isGpt: false }]);
+    setMessages((prev) => [...prev, { text: text, isGpt: false, files }]);
 
     const { ok, message } = await marketplaceUseCase(token, text, files);
     if (!ok) {
       setMessages((prev) => [
         ...prev,
         {
-          text: "No se pudo realizar la corrección",
+          text: message,
           isGpt: true,
+          files,
         },
       ]);
     } else {
@@ -39,6 +41,7 @@ export const MarketplacePage = () => {
         {
           text: message as string,
           isGpt: true,
+          files: [],
         },
       ]);
     }
@@ -62,7 +65,11 @@ export const MarketplacePage = () => {
               message.isGpt ? (
                 <GptMessage key={index} text={message.text} />
               ) : (
-                <MyMessage key={index} text={message.text} />
+                <MyMessage
+                  key={index}
+                  text={message.text}
+                  files={message.files}
+                />
               )
             )}
 
@@ -86,7 +93,6 @@ export const MarketplacePage = () => {
         onSendMessage={handlePost}
         placeholder="Pregúntame lo que necesites."
         accept=".png, .jpg, .jpeg"
-        disableCorrections
       />
     </div>
   );
