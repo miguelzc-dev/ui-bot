@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 
 interface Props {
-  onSendMessage: (phone: string, message: string, files: File[]) => void;
+  onSendMessage: (message: string, files: File[]) => void;
   placeholder?: string;
   accept?: string;
 }
@@ -19,11 +19,7 @@ export const TextMessageBoxMultiFile = ({
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onSendMessage(
-      "U2FsdGVkX19btyaN9pxAa3P3OZmnZNIu4AUtHS3lEWM=",
-      message,
-      selectedFile
-    );
+    onSendMessage(message, selectedFile);
     setMessage("");
     setSelectedFile([]);
   };
@@ -31,7 +27,7 @@ export const TextMessageBoxMultiFile = ({
   return (
     <form onSubmit={handleSendMessage}>
       {selectedFile.length > 0 ? (
-        <div className="flex flex-row items-center px-4 gap-2 overflow-x-auto w-full">
+        <div className="flex flex-row items-center px-4 gap-2 overflow-x-auto w-full py-1">
           <button
             type="button"
             title="Eliminar todo"
@@ -73,10 +69,10 @@ export const TextMessageBoxMultiFile = ({
           ))}
         </div>
       ) : null}
-      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 rounded-xl px-5 border-2 border-black">
+      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl border-transparent p-2 shadow-sm">
         <textarea
           name="message"
-          className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent resize-none"
+          className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent placeholder-gray-500 resize-none"
           placeholder={placeholder}
           autoComplete={"off"}
           autoCorrect={"off"}

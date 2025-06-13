@@ -9,7 +9,7 @@ export const menuRoutes = [
     title: "Inicio",
     message: "Hola",
     restart: true,
-    component: <MarketplacePage />,
+    component: <MarketplacePage message="" restart={false} />,
   },
   {
     to: "/chat-bot-logo",
@@ -17,7 +17,12 @@ export const menuRoutes = [
     title: "Cambiar Logo",
     message: "Hola, ayúdame a actualizar el logo.",
     restart: true,
-    component: <MarketplacePage />,
+    component: (
+      <MarketplacePage
+        message="Hola, ayúdame a actualizar el logo."
+        restart={true}
+      />
+    ),
   },
   {
     to: "/chat-bot-banner",
@@ -25,7 +30,12 @@ export const menuRoutes = [
     title: "Cambiar banner",
     message: "Hola, ayúdame a cambiar el banner.",
     restart: true,
-    component: <MarketplacePage />,
+    component: (
+      <MarketplacePage
+        message="Hola, ayúdame a cambiar el banner."
+        restart={true}
+      />
+    ),
   },
   {
     to: "/chat-bot-description",
@@ -33,7 +43,12 @@ export const menuRoutes = [
     title: "Descripción de exhibidor",
     message: "Hola, ayúdame a cambiar la descripción del exhibidor.",
     restart: true,
-    component: <MarketplacePage />,
+    component: (
+      <MarketplacePage
+        message="Hola, ayúdame a cambiar la descripción del exhibidor."
+        restart={true}
+      />
+    ),
   },
   {
     to: "/chat-bot-product",
@@ -41,7 +56,12 @@ export const menuRoutes = [
     title: "Crear Producto",
     message: "Hola, ayúdame a crear el producto.",
     restart: true,
-    component: <MarketplacePage />,
+    component: (
+      <MarketplacePage
+        message="Hola, ayúdame a crear el producto"
+        restart={true}
+      />
+    ),
   },
   {
     to: "/chat-bot-proforma",
@@ -49,7 +69,12 @@ export const menuRoutes = [
     title: "Crear Proforma",
     message: "Hola, ayúdame a crear la proforma.",
     restart: true,
-    component: <MarketplacePage />,
+    component: (
+      <MarketplacePage
+        message="Hola, ayúdame a crear la proforma."
+        restart={true}
+      />
+    ),
   },
 ];
 

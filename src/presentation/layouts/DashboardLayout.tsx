@@ -4,21 +4,24 @@ import { SidebarMenuItem } from "../components";
 
 export const DashboardLayout = () => {
   return (
-    <div className="flex flex-col max-h-[calc(100vh)] min-h-[calc(100vh)] ">
-      <main className="flex flex-row flex-grow sm:overflow-hidden overflow-y-auto">
-        <nav className="flex flex-col w-2/12 bg-black gap-1 items-center">
-          <img
-            className="w-8/12 my-8"
-            alt="Construex Logo"
-            src="/construex.png"
-          />
+    <div className="flex flex-col rounded-3xl h-[100vh]">
+      <main className="flex flex-row flex-grow sm:overflow-hidden overflow-y-auto gap-2">
+        <nav className="hidden sm:flex flex-col w-[318px] bg-secondary py-5">
+          <div className="px-5">
+            <img
+              className="w-full h-auto mt-4 mb-6"
+              alt="Construex Logo"
+              src="/construex.png"
+            />
+          </div>
+
           {menuRoutes.map((option) => (
             <SidebarMenuItem key={option.to} {...option} />
           ))}
         </nav>
 
-        <section className="flex flex-col bg-white p-3 w-10/12">
-          <div className="flex flex-row h-full ">
+        <section className="flex flex-col w-full p-10">
+          <div className="flex flex-row h-full">
             <div className="flex flex-col flex-auto h-full p-1 overflow-x-auto">
               <Outlet />
             </div>

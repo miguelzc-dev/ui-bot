@@ -3,13 +3,16 @@ import axios from "axios";
 export const marketplaceUseCase = async (
   token: string,
   prompt: string,
-  files: File[]
+  files: File[],
+  restart: boolean = false
 ) => {
   try {
+    const source = axios.CancelToken.source();
+
     const formData = new FormData();
     formData.append("Body", prompt || "");
     formData.append("Token", token);
-    formData.append("Restart_Conversation", "false");
+    formData.append("Restart_Conversation", `${restart}`);
     for (const file of files || []) {
       formData.append("Files", file);
     }
@@ -22,6 +25,7 @@ export const marketplaceUseCase = async (
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
         },
+        cancelToken: source.token,
       }
     );
 

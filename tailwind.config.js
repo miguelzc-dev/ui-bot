@@ -15,8 +15,8 @@ export default {
           700: "#FF5E08",
           800: "#DB4700",
         },
-        secondary: "#2E2E2E",
         black: "#2B2929",
+        secondary: "#2B2929",
         accent: "#FFFFFF",
       },
       fontFamily: {
