@@ -105,6 +105,7 @@ export const TextMessageBoxMultiFile = ({
               setSelectedFile(e.target.files ? Array.from(e.target.files) : [])
             }
             hidden
+            maxLength={5}
             multiple={true}
           />
         </>
