@@ -42,11 +42,11 @@ em {
 }
 
 .chat-container {
-  @apply flex flex-col flex-auto flex-shrink-0 rounded-2xl h-full;
+  @apply flex flex-col text-black my-auto;
 }
 
 .chat-messages {
-  @apply flex flex-col h-full overflow-x-auto mb-4;
+  @apply flex flex-col overflow-x-auto;
 }
 
 /* Animations */

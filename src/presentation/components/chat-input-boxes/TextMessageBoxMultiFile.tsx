@@ -13,7 +13,6 @@ export const TextMessageBoxMultiFile = ({
   accept,
 }: Props) => {
   const [message, setMessage] = useState("");
-  const [phone, setPhone] = useState("whatsapp:+593989160310");
 
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -21,7 +20,11 @@ export const TextMessageBoxMultiFile = ({
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onSendMessage(phone, message, selectedFile);
+    onSendMessage(
+      "U2FsdGVkX19btyaN9pxAa3P3OZmnZNIu4AUtHS3lEWM=",
+      message,
+      selectedFile
+    );
     setMessage("");
     setSelectedFile([]);
   };
@@ -55,10 +58,10 @@ export const TextMessageBoxMultiFile = ({
           </button>
         </div>
       ) : null}
-      <div className="flex flex-row items-center w-full h-auto justify-between gap-2  rounded-xl bg-[#2B2929] border-transparent p-2 shadow-sm focus-within:border-transparent">
+      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 rounded-xl px-5 border-2 border-black">
         <textarea
           name="message"
-          className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent text-gray-200 placeholder-gray-500 resize-none"
+          className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent resize-none"
           placeholder={placeholder}
           autoComplete={"off"}
           autoCorrect={"off"}
@@ -96,7 +99,7 @@ export const TextMessageBoxMultiFile = ({
         </>
 
         <button
-          className="btn-secondary bg-primary rounded-xl w-10"
+          className="btn-secondary text-white bg-primary rounded-full w-10 h-10 items-center  justify-center"
           type="submit"
         >
           <i className="fa-solid fa-paper-plane"></i>

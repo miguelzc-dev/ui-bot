@@ -17,14 +17,14 @@ export const MarketplacePage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handlePost = async (
-    phone: string,
+    token: string,
     text: string,
     files: File[] = []
   ) => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
-    const { ok, message } = await marketplaceUseCase(phone, text, files);
+    const { ok, message } = await marketplaceUseCase(token, text, files);
     if (!ok) {
       setMessages((prev) => [
         ...prev,
@@ -47,10 +47,14 @@ export const MarketplacePage = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div
+      className={
+        messages.length > 0 ? "chat-container h-full" : "chat-container px-60 "
+      }
+    >
       {messages.length > 0 ? (
         <div
-          className="chat-messages"
+          className="chat-messages h-full"
           ref={(el) => el?.scrollTo(0, el.scrollHeight)}
         >
           <div className="grid grid-cols-12 gap-y-2">
@@ -71,62 +75,16 @@ export const MarketplacePage = () => {
         </div>
       ) : (
         <>
-          <div className="chat-messages text-center gap-2 w-[80%] mx-auto py-auto">
-            <h1 className="text-2xl font-bold">Hola</h1>
-            <p className="text-3xl">¿En que te puedo ayudar hoy?</p>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost("", "hola, ayúdame a Actualizar Logo del exhibidor");
-              }}
-            >
-              Actualizar Logo del exhibidor
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost(
-                  "",
-                  "hola, ayúdame a Actualizar Banner del exhibidor"
-                );
-              }}
-            >
-              Actualizar Banner del exhibidor
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost(
-                  "",
-                  "hola, ayúdame a Actualizar Descripción del exhibidor"
-                );
-              }}
-            >
-              Actualizar Descripción del exhibidor
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost("", "hola, ayúdame a Crear Producto");
-              }}
-            >
-              Crear Producto
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost("", "hola, ayúdame a Crear Proforma");
-              }}
-            >
-              Crear Proforma
-            </button>
+          <div className="chat-messages text-center gap-2">
+            <h1 className="text-3xl text-black font-bold">¡Hola!</h1>
+            <p className="text-2xl text-black">¿En que te puedo ayudar hoy?</p>
           </div>
         </>
       )}
 
       <TextMessageBoxMultiFile
         onSendMessage={handlePost}
-        placeholder="Escribe aquí lo que deseas"
+        placeholder="Pregúntame lo que necesites."
         accept=".png, .jpg, .jpeg"
         disableCorrections
       />

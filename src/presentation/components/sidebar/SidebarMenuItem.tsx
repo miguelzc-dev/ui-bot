@@ -15,13 +15,13 @@ export const SidebarMenuItem = ({ to, icon, title, hidden }: Props) => {
           to={to}
           className={({ isActive }) =>
             isActive
-              ? "flex justify-center items-center bg-primary-600 rounded-md p-2 transition-colors"
-              : "flex justify-center items-center hover:bg-primary-400 rounded-md p-2 transition-colors"
+              ? "flex justify-center items-center bg-primary-500 p-2 w-full"
+              : "flex justify-center items-center hover:bg-primary-500 p-2 w-full"
           }
         >
-          <i className={`${icon} text-2xl mr-4 text-primary-800`}></i>
+          <img src={icon} className="text-base mr-4" />
           <div className="flex flex-col flex-grow">
-            <span className="text-white text-sm font-semibold">{title}</span>
+            <span className="text-white text-sm font-xs">{title}</span>
           </div>
         </NavLink>
       )}

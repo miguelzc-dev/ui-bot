@@ -16,6 +16,7 @@ export default {
           800: "#DB4700",
         },
         secondary: "#2E2E2E",
+        black: "#2B2929",
         accent: "#FFFFFF",
       },
       fontFamily: {

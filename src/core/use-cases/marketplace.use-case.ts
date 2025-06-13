@@ -1,12 +1,12 @@
 export const marketplaceUseCase = async (
-  phone: string,
+  token: string,
   prompt: string,
   files: File[]
 ) => {
   try {
     const formData = new FormData();
     formData.append("Body", prompt || "");
-    formData.append("Token", "U2FsdGVkX19btyaN9pxAa3P3OZmnZNIu4AUtHS3lEWM=");
+    formData.append("Token", token);
     formData.append("Restart_Conversation", "false");
     for (const file of files || []) {
       formData.append("Files", file);

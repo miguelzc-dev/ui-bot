@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  GptOrthographyMessage,
+  GptMessage,
   MyMessage,
   TextMessageBoxFile,
   TypingLoader,
@@ -21,11 +21,9 @@ interface Message {
 export const QuotationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [file, setFile] = useState<File | undefined>();
 
   const handlePost = async (phone: string, text: string, file?: File) => {
     setIsLoading(true);
-    setFile(file);
     setMessages((prev) => [...prev, { text: text, file: file, isGpt: false }]);
 
     const { ok, message } = await quotationUseCase(phone, text, file);
@@ -64,7 +62,7 @@ export const QuotationPage = () => {
         <div className="grid grid-cols-12 gap-y-2">
           {messages.map((message, index) =>
             message.isGpt ? (
-              <GptOrthographyMessage key={index} {...message.info!} />
+              <GptMessage key={index} text={message.text} {...message.info!} />
             ) : (
               <MyMessage key={index} text={message.text} file={message.file} />
             )

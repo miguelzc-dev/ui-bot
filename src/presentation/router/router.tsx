@@ -1,45 +1,55 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import { BotProformaPage, OrthographyPage } from "../pages";
 import { DashboardLayout } from "../layouts/DashboardLayout";
-import { QuotationPage } from "../pages/quotation/QuotationPage";
 import { MarketplacePage } from "../pages/marketplace/MarketplacePage";
-import { CompareQuotationPage } from "../pages/compare-quotation/CompareQuotationPage";
 
 export const menuRoutes = [
   {
     to: "/chat-bot-marketplace",
-    icon: "fa-solid fa-store",
-    title: "Asistente Construex",
-    hidden: false,
+    icon: "/home.svg",
+    title: "Inicio",
+    message: "Hola",
+    restart: true,
     component: <MarketplacePage />,
   },
   {
-    to: "/chat-bot-order",
-    icon: "fa-solid fa-cart-shopping",
-    title: "Chat Bot Order",
-    hidden: true,
-    component: <OrthographyPage />,
+    to: "/chat-bot-logo",
+    icon: "/edit-logo.svg",
+    title: "Cambiar Logo",
+    message: "Hola, ayúdame a actualizar el logo.",
+    restart: true,
+    component: <MarketplacePage />,
   },
   {
-    to: "/chat-bot-proform",
-    icon: "fa-solid fa-chart-pie",
-    title: "Chat Bot Proform",
-    hidden: true,
-    component: <BotProformaPage />,
+    to: "/chat-bot-banner",
+    icon: "/edit-banner.svg",
+    title: "Cambiar banner",
+    message: "Hola, ayúdame a cambiar el banner.",
+    restart: true,
+    component: <MarketplacePage />,
   },
   {
-    to: "/chat-bot-quotation",
-    icon: "fa-solid fa-edit",
-    title: "Chat Bot Quotation",
-    hidden: true,
-    component: <QuotationPage />,
+    to: "/chat-bot-description",
+    icon: "/edit-description.svg",
+    title: "Descripción de exhibidor",
+    message: "Hola, ayúdame a cambiar la descripción del exhibidor.",
+    restart: true,
+    component: <MarketplacePage />,
   },
   {
-    to: "/chat-bot-compare-quotation",
-    icon: "fa-solid fa-file-invoice",
-    title: "Chat Bot Compare Quotation",
-    hidden: true,
-    component: <CompareQuotationPage />,
+    to: "/chat-bot-product",
+    icon: "/create-product.svg",
+    title: "Crear Producto",
+    message: "Hola, ayúdame a crear el producto.",
+    restart: true,
+    component: <MarketplacePage />,
+  },
+  {
+    to: "/chat-bot-proforma",
+    icon: "/create-proforma.svg",
+    title: "Crear Proforma",
+    message: "Hola, ayúdame a crear la proforma.",
+    restart: true,
+    component: <MarketplacePage />,
   },
 ];
 

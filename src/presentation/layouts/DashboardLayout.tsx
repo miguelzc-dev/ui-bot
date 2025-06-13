@@ -4,31 +4,27 @@ import { SidebarMenuItem } from "../components";
 
 export const DashboardLayout = () => {
   return (
-    <>
-      <header className="bg-d bg-opacity-10 p-4 rounded-3xl">
-        <img
-          className="w-70 h-10 mb-2"
-          alt="Construex Logo"
-          src="/construex.png"
-        />
-      </header>
-      <div className="flex flex-col border-2 rounded-3xl max-h-[calc(100vh-5rem)] sm:min-h-[calc(100vh-6rem)] ">
-        <main className="flex flex-row flex-grow sm:overflow-hidden overflow-y-auto gap-2">
-          <nav className="hidden sm:flex flex-col w-[300px] bg-secondary p-5 rounded-3xl">
-            {menuRoutes.map((option) => (
-              <SidebarMenuItem key={option.to} {...option} />
-            ))}
-          </nav>
+    <div className="flex flex-col max-h-[calc(100vh)] min-h-[calc(100vh)] ">
+      <main className="flex flex-row flex-grow sm:overflow-hidden overflow-y-auto">
+        <nav className="flex flex-col w-1/5 bg-black gap-1 items-center">
+          <img
+            className="w-8/12 my-8"
+            alt="Construex Logo"
+            src="/construex.png"
+          />
+          {menuRoutes.map((option) => (
+            <SidebarMenuItem key={option.to} {...option} />
+          ))}
+        </nav>
 
-          <section className="flex flex-col w-full bg-secondary p-5 rounded-3xl ">
-            <div className="flex flex-row h-full ">
-              <div className="flex flex-col flex-auto h-full p-1 overflow-x-auto">
-                <Outlet />
-              </div>
+        <section className="flex flex-col w-full bg-white p-3">
+          <div className="flex flex-row h-full ">
+            <div className="flex flex-col flex-auto h-full p-1 overflow-x-auto">
+              <Outlet />
             </div>
-          </section>
-        </main>
-      </div>
-    </>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 };

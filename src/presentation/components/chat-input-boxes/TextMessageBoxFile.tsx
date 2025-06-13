@@ -13,7 +13,6 @@ export const TextMessageBoxFile = ({
   accept,
 }: Props) => {
   const [message, setMessage] = useState("");
-  const [phone, setPhone] = useState("whatsapp:+593989160310");
 
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -21,7 +20,11 @@ export const TextMessageBoxFile = ({
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onSendMessage(phone, message, selectedFile[0] || undefined);
+    onSendMessage(
+      "U2FsdGVkX19btyaN9pxAa3P3OZmnZNIu4AUtHS3lEWM=",
+      message,
+      selectedFile[0] || undefined
+    );
     setMessage("");
     setSelectedFile([]);
   };
