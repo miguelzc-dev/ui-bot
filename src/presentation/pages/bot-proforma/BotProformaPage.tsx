@@ -17,14 +17,14 @@ export const BotProformaPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const handlePost = async (phone: string, text: string, files: File[]) => {
+  const handlePost = async (text: string, files: File[]) => {
     setIsLoading(true);
     setMessages((prev) => [
       ...prev,
       { text: text, files: files, isGpt: false },
     ]);
 
-    const { ok, message } = await prosConsUseCase(phone, text, files);
+    const { ok, message } = await prosConsUseCase("", text, files);
     if (!ok) {
       setMessages((prev) => [
         ...prev,
