@@ -1,11 +1,13 @@
 export const quotationUseCase = async (
   phone: string,
   prompt: string,
-  file?: File
+  files: File[]
 ) => {
   try {
     const formData = new FormData();
-    // if (file) formData.append("File", file);
+    for (const file of files || []) {
+      formData.append("File", file);
+    }
     formData.append("Body", prompt || "");
     formData.append("From", phone);
     formData.append("OriginalRepliedMessageSid", "");
@@ -27,12 +29,12 @@ export const quotationUseCase = async (
     return {
       ok: true,
       message: data,
-      file: file,
+      files: files,
     };
   } catch (error) {
     return {
       ok: false,
-      file: undefined,
+      files: [],
       message: "No se pudo procesar",
     };
   }

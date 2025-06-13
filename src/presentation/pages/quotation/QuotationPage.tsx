@@ -2,37 +2,35 @@ import { useState } from "react";
 import {
   GptMessage,
   MyMessage,
-  TextMessageBoxFile,
+  TextMessageBoxMultiFile,
   TypingLoader,
 } from "../../components";
 import { quotationUseCase } from "../../../core/use-cases/quotation.use-case";
 
 interface Message {
   text: string;
-  file?: File;
+  files: File[];
   isGpt: boolean;
-  info?: {
-    userScore: number;
-    errors: string[];
-    message: string;
-  };
 }
 
 export const QuotationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const handlePost = async (phone: string, text: string, file?: File) => {
+  const handlePost = async (phone: string, text: string, files: File[]) => {
     setIsLoading(true);
-    setMessages((prev) => [...prev, { text: text, file: file, isGpt: false }]);
+    setMessages((prev) => [
+      ...prev,
+      { text: text, files: files, isGpt: false },
+    ]);
 
-    const { ok, message } = await quotationUseCase(phone, text, file);
+    const { ok, message } = await quotationUseCase(phone, text, files);
     if (!ok) {
       setMessages((prev) => [
         ...prev,
         {
           text: "No se pudo realizar la cotización",
-          file: undefined,
+          files: [],
           isGpt: true,
         },
       ]);
@@ -41,9 +39,8 @@ export const QuotationPage = () => {
         ...prev,
         {
           text: message as string,
-          file: file,
+          files: files,
           isGpt: true,
-          info: { message: message as string, userScore: 0, errors: [] },
         },
       ]);
     }
@@ -62,9 +59,13 @@ export const QuotationPage = () => {
         <div className="grid grid-cols-12 gap-y-2">
           {messages.map((message, index) =>
             message.isGpt ? (
-              <GptMessage key={index} text={message.text} {...message.info!} />
+              <GptMessage key={index} text={message.text} />
             ) : (
-              <MyMessage key={index} text={message.text} file={message.file} />
+              <MyMessage
+                key={index}
+                text={message.text}
+                files={message.files}
+              />
             )
           )}
 
@@ -86,10 +87,9 @@ export const QuotationPage = () => {
         </button>
       </div>
 
-      <TextMessageBoxFile
+      <TextMessageBoxMultiFile
         onSendMessage={handlePost}
         placeholder="Escribe aquí lo que deseas"
-        disableCorrections
         accept="image/*,application/pdf"
       />
     </div>

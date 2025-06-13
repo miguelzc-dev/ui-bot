@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 
 interface Props {
-  onSendMessage: (phone: string, message: string, file?: File) => void;
+  onSendMessage: (phone: string, message: string, files?: File) => void;
   placeholder?: string;
   disableCorrections?: boolean;
   accept?: string;
