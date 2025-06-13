@@ -20,16 +20,20 @@ interface Props {
 
 export const MarketplacePage = ({ message, restart }: Props) => {
   const [searchParam] = useSearchParams();
-  console.log("token", searchParam.get("token"));
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const token = searchParam.get("token") || "";
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   useEffect(() => {
     if (token) {
       setMessages([]);
       if (message != "") handlePost(message, [], restart);
     }
+    return () => {
+      controller.abort();
+    };
   }, [message]);
 
   const handlePost = async (
@@ -39,13 +43,15 @@ export const MarketplacePage = ({ message, restart }: Props) => {
   ) => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { text: text, isGpt: false, files }]);
-
-    const { ok, message } = await marketplaceUseCase(
+    const resp = await marketplaceUseCase(
+      signal,
       token,
       text,
       files,
       restartConversation
     );
+    if (!resp) return;
+    const { ok, message } = resp;
     if (!ok) {
       setMessages((prev) => [
         ...prev,

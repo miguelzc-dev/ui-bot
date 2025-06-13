@@ -1,14 +1,13 @@
 import axios from "axios";
 
 export const marketplaceUseCase = async (
+  signal: AbortSignal,
   token: string,
   prompt: string,
   files: File[],
   restart: boolean = false
 ) => {
   try {
-    const source = axios.CancelToken.source();
-
     const formData = new FormData();
     formData.append("Body", prompt || "");
     formData.append("Token", token);
@@ -25,7 +24,7 @@ export const marketplaceUseCase = async (
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
         },
-        cancelToken: source.token,
+        signal: signal,
       }
     );
 
@@ -34,7 +33,8 @@ export const marketplaceUseCase = async (
       message: resp.data.join("\n"),
       files: files,
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.code == "ERR_CANCELED") return;
     let errorMessage = "No se pudo procesar";
     if (axios.isAxiosError(error)) {
       errorMessage = error.response?.data?.detail || error.message;
