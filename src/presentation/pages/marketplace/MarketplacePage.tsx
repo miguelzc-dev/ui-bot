@@ -78,7 +78,7 @@ export const MarketplacePage = ({ message, restart }: Props) => {
   return (
     <div
       className={
-        messages.length > 0 ? "chat-container h-full" : "chat-container px-60 "
+        messages.length > 0 ? "chat-container h-full" : "chat-container xl:px-60 "
       }
     >
       {messages.length > 0 ? (
@@ -108,7 +108,7 @@ export const MarketplacePage = ({ message, restart }: Props) => {
         </div>
       ) : (
         <>
-          <div className="chat-messages h-auto text-center gap-2 w-[80%] mx-auto py-auto flex flex-col justify-center">
+          <div className="chat-messages h-auto text-center gap-2 w-[95%] md:w-[80%] mx-auto py-auto flex flex-col justify-center">
             <h1 className="text-4xl font-bold">¡Hola!</h1>
             <p className="text-3xl">¿En que te puedo ayudar hoy?</p>
 
