@@ -1,40 +1,36 @@
 import { useState } from "react";
 import {
-  GptOrthographyMessage,
+  GptMessage,
   MyMessage,
-  TextMessageBoxFile,
+  TextMessageBoxMultiFile,
   TypingLoader,
 } from "../../components";
 import { orthographyUseCase } from "../../../core/use-cases";
 
 interface Message {
   text: string;
-  file?: File;
+  files: File[];
   isGpt: boolean;
-  info?: {
-    userScore: number;
-    errors: string[];
-    message: string;
-  };
 }
 
 export const OrthographyPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [file, setFile] = useState<File | undefined>();
 
-  const handlePost = async (phone: string, text: string, file?: File) => {
+  const handlePost = async (text: string, files: File[]) => {
     setIsLoading(true);
-    setFile(file);
-    setMessages((prev) => [...prev, { text: text, file: file, isGpt: false }]);
+    setMessages((prev) => [
+      ...prev,
+      { text: text, files: files, isGpt: false },
+    ]);
 
-    const { ok, message } = await orthographyUseCase(phone, text, file);
+    const { ok, message } = await orthographyUseCase("", text, files);
     if (!ok) {
       setMessages((prev) => [
         ...prev,
         {
           text: "No se pudo realizar la corrección",
-          file: undefined,
+          files: [],
           isGpt: true,
         },
       ]);
@@ -43,14 +39,11 @@ export const OrthographyPage = () => {
         ...prev,
         {
           text: message as string,
-          file: file,
+          files: files,
           isGpt: true,
-          info: { message: message as string, userScore: 0, errors: [] },
         },
       ]);
     }
-
-    // Todo: Añadir el mensaje de isGPT en true
 
     setIsLoading(false);
   };
@@ -64,9 +57,9 @@ export const OrthographyPage = () => {
         <div className="grid grid-cols-12 gap-y-2">
           {messages.map((message, index) =>
             message.isGpt ? (
-              <GptOrthographyMessage key={index} {...message.info!} />
+              <GptMessage key={index} text={message.text} />
             ) : (
-              <MyMessage key={index} text={message.text} file={message.file} />
+              <MyMessage key={index} text={message.text} files={[]} />
             )
           )}
 
@@ -88,10 +81,9 @@ export const OrthographyPage = () => {
         </button>
       </div>
 
-      <TextMessageBoxFile
+      <TextMessageBoxMultiFile
         onSendMessage={handlePost}
         placeholder="Escribe aquí lo que deseas"
-        disableCorrections
         accept="image/*,application/pdf"
       />
     </div>

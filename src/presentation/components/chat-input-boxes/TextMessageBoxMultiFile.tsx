@@ -1,13 +1,12 @@
 import { FormEvent, useRef, useState } from "react";
 
 interface Props {
-  onSendMessage: (phone: string, message: string, files?: File) => void;
+  onSendMessage: (message: string, files: File[]) => void;
   placeholder?: string;
-  disableCorrections?: boolean;
   accept?: string;
 }
 
-export const TextMessageBoxFile = ({
+export const TextMessageBoxMultiFile = ({
   onSendMessage,
   placeholder,
   accept,
@@ -20,11 +19,7 @@ export const TextMessageBoxFile = ({
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onSendMessage(
-      "U2FsdGVkX19btyaN9pxAa3P3OZmnZNIu4AUtHS3lEWM=",
-      message,
-      selectedFile[0] || undefined
-    );
+    onSendMessage(message, selectedFile);
     setMessage("");
     setSelectedFile([]);
   };
@@ -32,21 +27,11 @@ export const TextMessageBoxFile = ({
   return (
     <form onSubmit={handleSendMessage}>
       {selectedFile.length > 0 ? (
-        <div className="flex items-center mb-2">
-          {selectedFile.map((file, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 bg-gray-800 text-gray-200 rounded-lg p-2"
-            >
-              <span className="truncate">{file.name}</span>
-              <span className="text-sm text-gray-500">
-                {Math.round(file.size / 1024)} KB
-              </span>
-            </div>
-          ))}
+        <div className="flex flex-row items-center px-4 gap-2 overflow-x-auto w-full py-1">
           <button
             type="button"
-            className="text-red-500 hover:text-red-700"
+            title="Eliminar todo"
+            className="text-xl text-red-700"
             onClick={() => {
               setSelectedFile([]);
               if (inputFileRef.current) {
@@ -56,6 +41,32 @@ export const TextMessageBoxFile = ({
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
+          {selectedFile.map((file, index) => (
+            <div
+              key={index}
+              className="flex flex-row items-center bg-white border-2 border-black rounded-md gap-2 px-2"
+              title={file.name}
+            >
+              <i className="fa-solid fa-file"></i>
+              <span className="truncate flex-wrap first-letter:flex-wrap">
+                {file.name.length > 10
+                  ? `${file.name.slice(0, 10)}...`
+                  : file.name}
+              </span>
+              <button
+                type="button"
+                className="text-red-500 hover:text-red-700"
+                onClick={() => {
+                  setSelectedFile(selectedFile.filter((_, i) => i !== index));
+                  if (inputFileRef.current) {
+                    inputFileRef.current.value = "";
+                  }
+                }}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          ))}
         </div>
       ) : null}
       <div className="flex flex-row items-center w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl border-transparent p-2 shadow-sm">
@@ -80,7 +91,7 @@ export const TextMessageBoxFile = ({
         <>
           <button
             type="button"
-            className="flex items-center justify-center hover:text-gray-600"
+            className="flex items-center justify-center text-gray-400 hover:text-gray-600"
             onClick={() => inputFileRef.current?.click()}
           >
             <i className="fa-solid fa-paperclip text-xl"></i>
@@ -99,10 +110,10 @@ export const TextMessageBoxFile = ({
         </>
 
         <button
-          className="btn-secondary bg-primary rounded-full h-10 w-10"
+          className="btn-secondary text-white bg-primary rounded-full w-10 h-10 items-center  justify-center"
           type="submit"
         >
-          <i className="fa-solid fa-paper-plane text-white"></i>
+          <i className="fa-solid fa-paper-plane"></i>
         </button>
       </div>
     </form>

@@ -1,37 +1,48 @@
+import axios from "axios";
+
 export const marketplaceUseCase = async (
-  phone: string,
+  token: string,
   prompt: string,
-  file?: File
+  files: File[],
+  restart: boolean = false
 ) => {
   try {
+    const source = axios.CancelToken.source();
+
     const formData = new FormData();
     formData.append("Body", prompt || "");
-    formData.append("From", "+593989160386");
+    formData.append("Token", token);
+    formData.append("Restart_Conversation", `${restart}`);
+    for (const file of files || []) {
+      formData.append("Files", file);
+    }
 
-    const resp = await fetch(
-      `${import.meta.env.VITE_GPT_MARKETPLACE}/test_reply`,
+    const resp = await axios.post(
+      `${import.meta.env.VITE_GPT_MARKETPLACE}/chat_bot`,
+      formData,
       {
-        method: "POST",
         headers: {
-          accept: "application/json",
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
         },
-        body: formData,
+        cancelToken: source.token,
       }
     );
 
-    if (!resp.ok) throw new Error("No se pudo procesar");
-    const data = (await resp.json()) as String[];
-
     return {
       ok: true,
-      message: data.join("\n"),
-      file: file,
+      message: resp.data.join("\n"),
+      files: files,
     };
   } catch (error) {
+    let errorMessage = "No se pudo procesar";
+    if (axios.isAxiosError(error)) {
+      errorMessage = error.response?.data?.detail || error.message;
+    }
     return {
       ok: false,
-      file: undefined,
-      message: "No se pudo procesar",
+      files: [],
+      message: errorMessage,
     };
   }
 };

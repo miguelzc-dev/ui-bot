@@ -1,33 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GptMessage,
-  GptOrthographyMessage,
   MyMessage,
-  TextMessageBoxFile,
+  TextMessageBoxMultiFile,
   TypingLoader,
 } from "../../components";
 import { marketplaceUseCase } from "../../../core/use-cases/marketplace.use-case";
+import { useSearchParams } from "react-router-dom";
 
 interface Message {
   text: string;
   isGpt: boolean;
+  files: File[];
+}
+interface Props {
+  message: string;
+  restart: boolean;
 }
 
-export const MarketplacePage = () => {
+export const MarketplacePage = ({ message, restart }: Props) => {
+  const [searchParam] = useSearchParams();
+  console.log("token", searchParam.get("token"));
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const token = searchParam.get("token") || "";
 
-  const handlePost = async (phone: string, text: string) => {
+  useEffect(() => {
+    if (token) {
+      setMessages([]);
+      if (message != "") handlePost(message, [], restart);
+    }
+  }, [message]);
+
+  const handlePost = async (
+    text: string,
+    files: File[] = [],
+    restartConversation: boolean = false
+  ) => {
     setIsLoading(true);
-    setMessages((prev) => [...prev, { text: text, isGpt: false }]);
+    setMessages((prev) => [...prev, { text: text, isGpt: false, files }]);
 
-    const { ok, message } = await marketplaceUseCase(phone, text);
+    const { ok, message } = await marketplaceUseCase(
+      token,
+      text,
+      files,
+      restartConversation
+    );
     if (!ok) {
       setMessages((prev) => [
         ...prev,
         {
-          text: "No se pudo realizar la corrección",
+          text: message,
           isGpt: true,
+          files,
         },
       ]);
     } else {
@@ -36,6 +61,7 @@ export const MarketplacePage = () => {
         {
           text: message as string,
           isGpt: true,
+          files: [],
         },
       ]);
     }
@@ -44,10 +70,14 @@ export const MarketplacePage = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div
+      className={
+        messages.length > 0 ? "chat-container h-full" : "chat-container px-60 "
+      }
+    >
       {messages.length > 0 ? (
         <div
-          className="chat-messages"
+          className="chat-messages h-full"
           ref={(el) => el?.scrollTo(0, el.scrollHeight)}
         >
           <div className="grid grid-cols-12 gap-y-2">
@@ -55,7 +85,11 @@ export const MarketplacePage = () => {
               message.isGpt ? (
                 <GptMessage key={index} text={message.text} />
               ) : (
-                <MyMessage key={index} text={message.text} />
+                <MyMessage
+                  key={index}
+                  text={message.text}
+                  files={message.files}
+                />
               )
             )}
 
@@ -68,65 +102,26 @@ export const MarketplacePage = () => {
         </div>
       ) : (
         <>
-          <div className="chat-messages text-center gap-2 w-[80%] mx-auto py-auto">
-            <h1 className="text-2xl font-bold">Hola</h1>
+          <div className="chat-messages h-auto text-center gap-2 w-[80%] mx-auto py-auto flex flex-col justify-center">
+            <h1 className="text-4xl font-bold">¡Hola!</h1>
             <p className="text-3xl">¿En que te puedo ayudar hoy?</p>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost("", "hola, ayúdame a Actualizar Logo del exhibidor");
-              }}
-            >
-              Actualizar Logo del exhibidor
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost(
-                  "",
-                  "hola, ayúdame a Actualizar Banner del exhibidor"
-                );
-              }}
-            >
-              Actualizar Banner del exhibidor
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost(
-                  "",
-                  "hola, ayúdame a Actualizar Descripción del exhibidor"
-                );
-              }}
-            >
-              Actualizar Descripción del exhibidor
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost("", "hola, ayúdame a Crear Producto");
-              }}
-            >
-              Crear Producto
-            </button>
-            <button
-              className="btn-option"
-              onClick={() => {
-                handlePost("", "hola, ayúdame a Crear Proforma");
-              }}
-            >
-              Crear Proforma
-            </button>
+
+            <TextMessageBoxMultiFile
+              onSendMessage={handlePost}
+              placeholder="Escribe aquí lo que deseas"
+              accept=".png, .jpg, .jpeg"
+            />
           </div>
         </>
       )}
 
-      <TextMessageBoxFile
-        onSendMessage={handlePost}
-        placeholder="Escribe aquí lo que deseas"
-        accept=".png, .jpg, .jpeg"
-        disableCorrections
-      />
+      {messages.length > 0 && (
+        <TextMessageBoxMultiFile
+          onSendMessage={handlePost}
+          placeholder="Escribe aquí lo que deseas"
+          accept=".png, .jpg, .jpeg"
+        />
+      )}
     </div>
   );
 };
