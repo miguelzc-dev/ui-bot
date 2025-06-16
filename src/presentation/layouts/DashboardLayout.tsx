@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { menuRoutes } from "../router/router";
 import { SidebarMenuItem } from "../components";
 import { useEffect, useState } from "react";
@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 export const DashboardLayout = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const location = useLocation();
+
+  useEffect(() => {
+    setOpenMenu(false);
+  }, [location]);
 
   useEffect(() => {
     function handleResize() {
@@ -42,7 +47,7 @@ export const DashboardLayout = () => {
             className="absolute top-0 left-0 block sm:hidden ml-2 mt-2 fa-solid fa-bars"
             onClick={() => setOpenMenu(!openMenu)}
           />
-          <div className={`flex flex-row h-full ${isMobile && openMenu && '' }`}>
+          <div className={`flex flex-row h-full ${isMobile && openMenu && ""}`}>
             <div className="flex flex-col flex-auto h-full p-1 overflow-x-auto">
               <Outlet />
             </div>
