@@ -30,11 +30,13 @@ export const DashboardLayout = () => {
           } sm:flex flex-col w-[318px] min-w-[250px] bg-secondary py-5`}
         >
           <div className="px-5">
-            <img
-              className="w-full h-auto mt-4 mb-6"
-              alt="Construex Logo"
-              src="/construex.png"
-            />
+            <a href="https://www.construex.com.ec/login">
+              <img
+                className="w-full h-auto mt-4 mb-6"
+                alt="Construex Logo"
+                src="/construex.png"
+              />
+            </a>
           </div>
 
           {menuRoutes.map((option) => (
