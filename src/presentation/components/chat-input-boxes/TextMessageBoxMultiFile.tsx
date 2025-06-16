@@ -11,6 +11,13 @@ export const TextMessageBoxMultiFile = ({
   placeholder,
   accept,
 }: Props) => {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleFocus = () => {
+    setTimeout(() => {
+      inputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 300);
+  };
   const [message, setMessage] = useState("");
 
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
@@ -69,8 +76,10 @@ export const TextMessageBoxMultiFile = ({
           ))}
         </div>
       ) : null}
-      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl border-transparent p-2 shadow-sm">
+      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl p-2 shadow-sm">
         <textarea
+          ref={inputRef}
+          onFocus={handleFocus}
           name="message"
           className="flex w-full rounded-xl pl-4 pt-2 bg-transparent focus:outline-none focus:ring-0 focus:border-transparent placeholder-gray-500 resize-none"
           placeholder={placeholder}
