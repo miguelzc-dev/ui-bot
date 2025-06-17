@@ -7,7 +7,14 @@ body {
   /* background-color: #000000; */
   /* color: white; */
   font-family: "Open Sans", sans-serif;
+  /* height: 100%; */
+}
+
+html, body, #root {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 h1 {
@@ -48,6 +55,18 @@ em {
 
 .chat-messages {
   @apply flex flex-col overflow-x-auto mb-4;
+}
+
+.bot-response a {
+ @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600
+}
+
+.bot-response p {
+ @apply mb-0
+}
+
+.bot-response ol {
+ @apply list-decimal list-inside leading-none
 }
 
 /* Animations */

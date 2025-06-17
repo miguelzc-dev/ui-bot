@@ -10,10 +10,27 @@ export const GptMessage = ({ text }: Props) => {
       <div className="flex flex-row items-start">
         <div className="relative ml-3 text-sm bg-[#FAFAFA] pt-3 pb-2 px-4 shadow rounded-xl">
           <span style={{ whiteSpace: "pre-wrap" }}>
-            <ReactMarkdown>{text}</ReactMarkdown>
+            <ReactMarkdown
+              components={{ a: LinkRenderer }}
+              className="bot-response"
+            >
+              {text}
+            </ReactMarkdown>
           </span>
         </div>
       </div>
     </div>
+  );
+};
+
+const LinkRenderer = (props: any) => {
+  return (
+    <a
+      href={props.href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {props.children}
+    </a>
   );
 };
