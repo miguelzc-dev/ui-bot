@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { menuRoutes } from "../router/router";
 import { SidebarMenuItem } from "../components";
 import { useEffect, useState } from "react";
+import ConstruexLogo from "/construex.png";
 
 export const DashboardLayout = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -34,7 +35,7 @@ export const DashboardLayout = () => {
               <img
                 className="w-full h-auto mt-4 mb-6"
                 alt="Construex Logo"
-                src="/construex.png"
+                src={ConstruexLogo}
               />
             </a>
           </div>

@@ -1,11 +1,17 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { DashboardLayout } from "../layouts/DashboardLayout";
 import { MarketplacePage } from "../pages/marketplace/MarketplacePage";
+import homeIcon from "/home.svg";
+import editLogoIcon from "/edit-logo.svg";
+import editBannerIcon from "/edit-banner.svg";
+import editDescriptionIcon from "/edit-description.svg";
+import createProductIcon from "/create-product.svg";
+import createProformaIcon from "/create-proforma.svg";
 
 export const menuRoutes = [
   {
     to: "/chat-bot-marketplace",
-    icon: "/home.svg",
+    icon: homeIcon,
     title: "Inicio",
     message: "Hola",
     restart: true,
@@ -13,7 +19,7 @@ export const menuRoutes = [
   },
   {
     to: "/chat-bot-logo",
-    icon: "/edit-logo.svg",
+    icon: editLogoIcon,
     title: "Cambiar Logo",
     message: "Hola, ayúdame a actualizar el logo.",
     restart: true,
@@ -26,7 +32,7 @@ export const menuRoutes = [
   },
   {
     to: "/chat-bot-banner",
-    icon: "/edit-banner.svg",
+    icon: editBannerIcon,
     title: "Cambiar banner",
     message: "Hola, ayúdame a cambiar el banner.",
     restart: true,
@@ -39,7 +45,7 @@ export const menuRoutes = [
   },
   {
     to: "/chat-bot-description",
-    icon: "/edit-description.svg",
+    icon: editDescriptionIcon,
     title: "Descripción de exhibidor",
     message: "Hola, ayúdame a cambiar la descripción del exhibidor.",
     restart: true,
@@ -52,7 +58,7 @@ export const menuRoutes = [
   },
   {
     to: "/chat-bot-product",
-    icon: "/create-product.svg",
+    icon: createProductIcon,
     title: "Crear Producto",
     message: "Hola, ayúdame a crear el producto.",
     restart: true,
@@ -65,7 +71,7 @@ export const menuRoutes = [
   },
   {
     to: "/chat-bot-proforma",
-    icon: "/create-proforma.svg",
+    icon: createProformaIcon,
     title: "Crear Proforma",
     message: "Hola, ayúdame a crear la proforma.",
     restart: true,
