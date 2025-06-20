@@ -76,7 +76,7 @@ export const TextMessageBoxMultiFile = ({
           ))}
         </div>
       ) : null}
-      <div className="flex flex-row items-center w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl p-2 shadow-sm">
+      <div className="flex flex-row w-full h-auto justify-between gap-2 border border-[#5C5C5C] rounded-xl p-2 shadow-sm">
         <textarea
           ref={inputRef}
           onFocus={handleFocus}
@@ -100,7 +100,7 @@ export const TextMessageBoxMultiFile = ({
         <>
           <button
             type="button"
-            className="flex items-center justify-center text-gray-400 hover:text-gray-600"
+            className="flex items-center justify-center h-10 text-gray-400 hover:text-gray-600"
             onClick={() => inputFileRef.current?.click()}
           >
             <i className="fa-solid fa-paperclip text-xl"></i>
@@ -120,7 +120,7 @@ export const TextMessageBoxMultiFile = ({
         </>
 
         <button
-          className="btn-secondary text-white bg-primary rounded-full w-10 h-10 items-center  justify-center"
+          className="btn-secondary text-white bg-primary rounded-full w-14 sm:w-12 text-center h-10 items-center justify-center p-0"
           type="submit"
         >
           <i className="fa-solid fa-paper-plane"></i>

@@ -44,11 +44,19 @@ export const DashboardLayout = () => {
           ))}
         </nav>
 
-        <section className="flex flex-col w-full sm:p-10 relative min-w-[320px]">
-          <button
-            className="absolute top-0 left-0 block sm:hidden ml-2 mt-2 fa-solid fa-bars"
-            onClick={() => setOpenMenu(!openMenu)}
-          />
+        <section className="flex flex-col w-full pt-8 sm:p-10 relative min-w-[320px]">
+          <div className="absolute top-0 left-0 block sm:hidden ml-2 mt-2 flex">
+            <button
+              className="fa-solid fa-bars"
+              onClick={() => setOpenMenu(!openMenu)}
+            />
+            <img
+                className="w-24 h-auto ml-4"
+                alt="Construex Logo"
+                src="/construex-black.png"
+              />
+          </div>
+
           <div className={`flex flex-row h-full ${isMobile && openMenu && ""}`}>
             <div className="flex flex-col flex-auto h-full p-1 overflow-x-auto">
               <Outlet />
