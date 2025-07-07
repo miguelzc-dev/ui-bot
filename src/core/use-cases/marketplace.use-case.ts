@@ -5,13 +5,15 @@ export const marketplaceUseCase = async (
   token: string,
   prompt: string,
   files: File[],
-  restart: boolean = false
+  restart: boolean = false,
+  country: string
 ) => {
   try {
     const formData = new FormData();
     formData.append("Body", prompt || "");
     formData.append("Token", token);
     formData.append("Restart_Conversation", `${restart}`);
+    formData.append("Country", country?.toUpperCase() || "");
     for (const file of files || []) {
       formData.append("Files", file);
     }
