@@ -23,6 +23,7 @@ export const MarketplacePage = ({ message, restart }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const token = searchParam.get("token") || "";
+  const country = searchParam.get("country") || "";
   const controller = new AbortController();
   const signal = controller.signal;
 
@@ -48,7 +49,8 @@ export const MarketplacePage = ({ message, restart }: Props) => {
       token,
       text,
       files,
-      restartConversation
+      restartConversation,
+      country
     );
     if (!resp) return;
     const { ok, message } = resp;
@@ -78,7 +80,9 @@ export const MarketplacePage = ({ message, restart }: Props) => {
   return (
     <div
       className={
-        messages.length > 0 ? "chat-container h-full" : "chat-container xl:px-60 "
+        messages.length > 0
+          ? "chat-container h-full"
+          : "chat-container xl:px-60 "
       }
     >
       {messages.length > 0 ? (
